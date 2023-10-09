@@ -31,6 +31,8 @@ ifeq ($(wildcard ${BOARD_MMAP_PATH}),)
 memory-map:
 else
 memory-map: ${CVI_BOARD_MEMMAP_H_PATH} ${CVI_BOARD_MEMMAP_CONF_PATH} ${CVI_BOARD_MEMMAP_LD_PATH}
+	mkdir -p ${TOP_DIR}/build/output/cv1800b_sophpi_duo_sd
+	cp ${CVI_BOARD_MEMMAP_LD_PATH} ${TOP_DIR}/build/output/cv1800b_sophpi_duo_sd
 endif
 
 rtos: memory-map
@@ -86,6 +88,7 @@ u-boot-build: ${UBOOT_CVIPART_DEP}
 	${Q}$(MAKE) -C u-boot ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-musl- cvitek_cv1800b_milkv_duo_sd_defconfig O=${UBOOT_OUTPUT_FOLDER}
 	${Q}$(MAKE) -C u-boot/${UBOOT_OUTPUT_FOLDER} ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-musl- -j${NPROC} all
 	${Q}cat u-boot/build/u-boot.bin > u-boot/build/u-boot-raw.bin
+	${Q}rm -f ${UBOOT_CVITEK_CONFIG_PATH}
 
 u-boot-clean:
 	$(call print_target)
@@ -127,4 +130,4 @@ fsbl-build: u-boot-build memory-map
 
 fsbl-clean: rtos-clean
 	$(call print_target)
-	${Q}$(MAKE) -C fsbl clean O=build
+	${Q}$(MAKE) CROSS_COMPILE=riscv64-unknown-linux-musl- -C fsbl clean O=build

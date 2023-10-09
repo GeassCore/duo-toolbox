@@ -1,0 +1,6 @@
+[submodule "fip/opensbi"]
+	path = fip/opensbi
+	url = https://github.com/riscv-software-src/opensbi.git
+[submodule "fip/u-boot"]
+	path = fip/u-boot
+	url = https://github.com/milk-v/cvitek-u-boot-2021.10.git

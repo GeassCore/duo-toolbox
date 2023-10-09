@@ -1,0 +1,6 @@
+*.d
+fip.bin
+host-tools/
+fip/build/output/
+fip/env
+fip/build/scripts/__pycache__/
